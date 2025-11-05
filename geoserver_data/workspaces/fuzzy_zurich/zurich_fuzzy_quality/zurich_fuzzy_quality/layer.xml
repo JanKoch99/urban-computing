@@ -1,0 +1,17 @@
+<layer>
+  <name>zurich_fuzzy_quality</name>
+  <id>LayerInfoImpl-47433c2f:19a549ff7ba:-7ffc</id>
+  <type>RASTER</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-47433c2f:19a549ff7ba:-7f8e</id>
+  </defaultStyle>
+  <resource class="coverage">
+    <id>CoverageInfoImpl-47433c2f:19a549ff7ba:-7ffd</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2025-11-05 15:31:50.768 UTC</dateCreated>
+  <dateModified>2025-11-05 16:51:51.605 UTC</dateModified>
+</layer>

@@ -10,6 +10,7 @@ function App() {
   const [ozonShow, setOzonShow] = useState(false)
   const [russShow, setRussShow] = useState(false)
   const [laermShow, setLaermShow] = useState(false)
+  const [fuzzyShow, setFuzzyShow] = useState(false)
   const [opacity] = useState(0.7)
   const zurichCenter = [47.3769, 8.5417];
   const [activeLegendUrl, setActiveLegendUrl] = useState(null);
@@ -19,6 +20,7 @@ function App() {
       setActiveLegendUrl(null);
       return;
     }
+    //TODO: Fuzzy legend
     switch (key) {
       case 'pm10':
           setActiveLegendUrl(`https://wms.zh.ch/AwelLHPM10JahreZHWMS?version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=pm10-jahre-${year}&format=image/png&STYLE=default`);
@@ -52,6 +54,7 @@ function App() {
     setOzonShow(layer === 'ozon' ? checked : false);
     setRussShow(layer === 'russ' ? checked : false);
     setLaermShow(layer === 'laerm' ? checked : false);
+    setFuzzyShow(layer === 'fuzzy' ? checked : false);
     setLegendFor(layer, checked);
   };
 
@@ -134,6 +137,18 @@ function App() {
                             Strassenlärm
                         </label>
                     </div>
+                    <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="fuzzy"
+                            checked={fuzzyShow}
+                            onChange={handleToggle('fuzzy')}
+                        />
+                        <label className="form-check-label" htmlFor="fuzzy">
+                            Fuzzy Environment
+                        </label>
+                    </div>
                 </div>
             </div>
             {activeLegendUrl && (
@@ -148,6 +163,18 @@ function App() {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                {fuzzyShow && (
+                    <WMSTileLayer
+                        url="http://localhost:8080/geoserver/fuzzy_zurich/wms"
+                        layers="fuzzy_zurich:zurich_fuzzy_quality"
+                        styles="fuzzy_zurich:zurich_fuzzy_quality_colored"
+                        format="image/png"
+                        transparent={true}
+                        version="1.3.0"
+                        attribution="© Your Local GeoServer"
+                        opacity={opacity}
+                    />
+                )}
                 {pm10Show && (
                     <WMSTileLayer
                         url="https://wms.zh.ch/AwelLHPM10JahreZHWMS"

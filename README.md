@@ -1,45 +1,57 @@
-Zuerst die Dateien herunterladen und in ./data tun:
+Urban Computing — Setup and Usage Guide
 
-- https://data.geo.admin.ch/browser/index.html#/collections/ch.bafu.laerm-strassenlaerm_tag/items/laerm-strassenlaerm_tag?.language=en
-- https://data.geo.admin.ch/browser/index.html#/collections/ch.bafu.luftreinhaltung-stickstoffdioxid/items/luftreinhaltung-stickstoffdioxid_2024?.language=en&.asset=asset-luftreinhaltung-stickstoffdioxid_2024_2056-tif
+Overview
+This repository combines three parts:
+- Fuzzy script (Jupyter notebook) to generate the fuzzy quality cards/rasters
+- Dockerized GeoServer stack to serve the data
+- Frontend (React) to visualize the layers
 
+What you need
+- For the frontend
+  - Node.js and npm (Node 18+ recommended)
+  - A free local port for the dev server (usually 3000)
 
-Danach den Docker starten mit:
+- For the fuzzy script
+  - Python 3.9+ (3.10+ recommended)
+  - Jupyter Notebook or JupyterLab (or VS Code with the Jupyter extension)
+  - Install the Python libraries used in the notebook; if you don’t already have them, a common setup is: jupyter, numpy, pandas, matplotlib. Additional geospatial libraries may be required depending on your local environment and the notebook’s cells.
 
-```shell 
-  docker compose up -d
-```
+- For the GeoServer stack
+  - Docker and Docker Compose
+  - A free local port 8080 (for GeoServer)
 
+Step-by-step: How to use this project
+1) Generate the fuzzy cards first
+   - Open the notebook at `fuzzy-script/FuzzyCardGenerator.ipynb` in Jupyter (or VS Code/JupyterLab).
+   - Run all cells to generate the required outputs. Follow the instructions inside the notebook for any data inputs and output locations.
 
-Danach dieses Skript ausführen:
+2) Start the GeoServer stack
+   - From the repository root, run:
+     ```
+     docker compose up -d
+     ```
+   - Wait until the containers are healthy/running.
 
-```shell
-  bash init.sh
-```
+3) Start the frontend
+   - In a new terminal, navigate to the frontend folder and install dependencies:
+     ```
+     cd frontend
+     npm install
+     ```
+   - Start the development server:
+     ```
+     npm start
+     ```
+   - The app will open at `http://localhost:3000` (or another port if 3000 is taken).
 
-Alt:
+GeoServer access
+- Web UI: `http://localhost:8080/geoserver/web/`
+- Default credentials (for local development):
+  - Username: `admin`
+  - Password: `geoserver`
+- GeoServer REST endpoint base: `http://localhost:8080/geoserver/`
 
-Herunterladen --> https://data.geo.admin.ch/browser/index.html#/collections/ch.bafu.laerm-strassenlaerm_tag/items/laerm-strassenlaerm_tag?.language=en
-Datenspeicher --> Datenquelle hinzufügen --> GeoTIFF --> {Name: strassenlaerm_tag, URL:file:///opt/geoserver/data_dir/data/strassenlaerm_tag.tif --> Speichern 
-Stile --> Stil hinzufügen --> {name: strassenlaerm_tag_colormap, NoisePollution.sld} --> Speichern
-Layer --> Layer hinzufügen --> strassenlaerm_tag --> Publizieren --> Publizierung --> Standardstil: strassenlaerm_tag_colormap
-
-Geoserver erreichbar unter: http://localhost:8080/geoserver/web/?0
-
----
-Hinweis: Bei allen curl-Anfragen an GeoServer muss man sich authentifizieren. Standard-Anmeldedaten sind admin/geoserver.
-
-Beispiele:
-- Version prüfen (sollte 200 OK liefern):
-  curl -u admin:geoserver http://localhost:8080/geoserver/rest/about/version
-
-- Workspaces als JSON auflisten:
-  curl -u admin:geoserver -H "Accept: application/json" http://localhost:8080/geoserver/rest/workspaces
-
-Tipp:
-- Das Skript init.sh verwendet bereits die Standard-Zugangsdaten (admin/geoserver). Diese können mit Umgebungsvariablen überschrieben werden:
-  GEOSERVER_USER=admin GEOSERVER_PASS=geoserver bash init.sh
-
-Nach dem Ausführen von init.sh:
-- Jeder GeoTIFF wird als Layer mit dem Basis-Dateinamen (ohne Erweiterung) im Workspace urban veröffentlicht. Es findet keine Umbenennung statt.
-- Falls eine Datei genau strassenlaerm_tag.tif heißt, wird für diesen Layer der Standardstil strassenlaerm_tag_colormap gesetzt (fällt andernfalls auf NoisePollution zurück).
+Notes
+- Make sure you complete step (1) before (2) and (3), so the generated data are available for serving and visualizing.
+- If you change the generated data or add new layers, you may need to refresh GeoServer configuration or restart the stack depending on your setup.
+- If ports 3000 or 8080 are in use, stop the other services or adjust your configuration accordingly.

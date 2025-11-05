@@ -1,23 +1,24 @@
 services:
-  mongodb:
-    image: 'mongo:latest'
-    environment:
-      - 'MONGO_INITDB_DATABASE=mydatabase'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongo-data:/data/db
+#  mongodb:
+#    image: 'mongo:latest'
+#    environment:
+#      - 'MONGO_INITDB_DATABASE=mydatabase'
+#      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+#      - 'MONGO_INITDB_ROOT_USERNAME=root'
+#    ports:
+#      - '27017:27017'
+#    volumes:
+#      - mongo-data:/data/db
 
   geoserver:
-    image: docker.osgeo.org/geoserver:2.28.x
+    image: docker.osgeo.org/geoserver:2.28.0
     container_name: geoserver
     ports:
       - "8080:8080"
     volumes:
-      - ./data:/opt/geoserver/data_dir/data
-      - ./styles:/opt/geoserver/data_dir/styles
-
-volumes:
-  mongo-data:
+      - ./geoserver_data:/opt/geoserver_data
+    environment:
+      - SKIP_DEMO_DATA=true
+#
+#volumes:
+#  mongo-data:
