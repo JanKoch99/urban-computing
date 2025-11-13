@@ -1,0 +1,13 @@
+<coverageStore>
+  <id>CoverageStoreInfoImpl--5dcfcf09:19a6533df58:-7e9f</id>
+  <name>test</name>
+  <type>GeoTIFF</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfoImpl-47433c2f:19a549ff7ba:-8000</id>
+  </workspace>
+  <__default>false</__default>
+  <dateCreated>2025-11-08 21:02:32.862 UTC</dateCreated>
+  <disableOnConnFailure>false</disableOnConnFailure>
+  <url>file:data/pm10_fuzzy_quality.tif</url>
+</coverageStore>

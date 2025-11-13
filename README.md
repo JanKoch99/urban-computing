@@ -55,3 +55,6 @@ Notes
 - Make sure you complete step (1) before (2) and (3), so the generated data are available for serving and visualizing.
 - If you change the generated data or add new layers, you may need to refresh GeoServer configuration or restart the stack depending on your setup.
 - If ports 3000 or 8080 are in use, stop the other services or adjust your configuration accordingly.
+
+Data access
+https://1drv.ms/f/c/737279682432ed50/EtpFXH34bAROq5mgIQEvvy8BwP-sx6jgWnjICT3n1a2xzQ?e=nYuu6F

@@ -15,12 +15,37 @@ function App() {
   const zurichCenter = [47.3769, 8.5417];
   const [activeLegendUrl, setActiveLegendUrl] = useState(null);
 
+  const FuzzyLegend = () => (
+    <div>
+      <div className="mb-2 fw-bold">Fuzzy Environment</div>
+      <div className="d-flex align-items-center mb-1">
+        <span style={{ width: 16, height: 16, backgroundColor: '#006400', display: 'inline-block', marginRight: 8, border: '1px solid #333' }} />
+        <span>Very Good</span>
+      </div>
+      <div className="d-flex align-items-center mb-1">
+        <span style={{ width: 16, height: 16, backgroundColor: '#7CFC00', display: 'inline-block', marginRight: 8, border: '1px solid #333' }} />
+        <span>Good</span>
+      </div>
+      <div className="d-flex align-items-center mb-1">
+        <span style={{ width: 16, height: 16, backgroundColor: '#FFFF00', display: 'inline-block', marginRight: 8, border: '1px solid #333' }} />
+        <span>Liveable</span>
+      </div>
+      <div className="d-flex align-items-center mb-1">
+        <span style={{ width: 16, height: 16, backgroundColor: '#FFA500', display: 'inline-block', marginRight: 8, border: '1px solid #333' }} />
+        <span>Bad</span>
+      </div>
+      <div className="d-flex align-items-center">
+        <span style={{ width: 16, height: 16, backgroundColor: '#FF0000', display: 'inline-block', marginRight: 8, border: '1px solid #333' }} />
+        <span>Very Bad</span>
+      </div>
+    </div>
+  );
+
   const setLegendFor = (key, checked) => {
     if (!checked) {
       setActiveLegendUrl(null);
       return;
     }
-    //TODO: Fuzzy legend
     switch (key) {
       case 'pm10':
           setActiveLegendUrl(`https://wms.zh.ch/AwelLHPM10JahreZHWMS?version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=pm10-jahre-${year}&format=image/png&STYLE=default`);
@@ -39,6 +64,9 @@ function App() {
           return;
       case 'laerm':
           setActiveLegendUrl(`https://wms.geo.admin.ch/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=ch.bafu.laerm-strassenlaerm_tag&FORMAT=image/png&STYLE=default&SLD_VERSION=1.1.0`);
+          return;
+      case 'fuzzy':
+          setActiveLegendUrl(null);
           return;
       default:
           setActiveLegendUrl(null);
@@ -151,10 +179,14 @@ function App() {
                     </div>
                 </div>
             </div>
-            {activeLegendUrl && (
+            {(activeLegendUrl || fuzzyShow) && (
                 <div className="card position-absolute z-1 bottom-0 end-0 m-3">
                     <div className="card-body">
-                        <img src={activeLegendUrl} alt="Legende" />
+                        {activeLegendUrl ? (
+                          <img src={activeLegendUrl} alt="Legende" />
+                        ) : (
+                          <FuzzyLegend />
+                        )}
                     </div>
                 </div>
             )}
