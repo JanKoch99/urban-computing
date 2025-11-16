@@ -21,18 +21,23 @@ What you need
   - A free local port 8080 (for GeoServer)
 
 Step-by-step: How to use this project
-1) Generate the fuzzy cards first
-   - Open the notebook at `fuzzy-script/FuzzyCardGenerator.ipynb` in Jupyter (or VS Code/JupyterLab).
-   - Run all cells to generate the required outputs. Follow the instructions inside the notebook for any data inputs and output locations.
+1) Get the data
+  - Download the files from OneDrive
+  - Put the files in ./geoserver_data/data
 
-2) Start the GeoServer stack
+2) Generate the fuzzy cards if not copied from the OneDrive folder
+   - Open the notebook at `fuzzy-script/FuzzyCardGenerator7.ipynb` in Jupyter (or VS Code/JupyterLab).
+   - Run all cells to generate the required outputs. Follow the instructions inside the notebook for any data inputs and output locations.
+   - This takes a while, so be patient (1–3 hours)
+
+3) Start the GeoServer stack
    - From the repository root, run:
      ```
      docker compose up -d
      ```
    - Wait until the containers are healthy/running.
 
-3) Start the frontend
+4) Start the frontend
    - In a new terminal, navigate to the frontend folder and install dependencies:
      ```
      cd frontend
