@@ -1,0 +1,16 @@
+<layer>
+  <name>ssep</name>
+  <id>LayerInfoImpl-489b96c0:19ad1310f4f:-7c10</id>
+  <type>RASTER</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--3d08344d:19a40d0eb6c:-7ffd</id>
+  </defaultStyle>
+  <resource class="coverage">
+    <id>CoverageInfoImpl-489b96c0:19ad1310f4f:-7c11</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2025-11-29 20:50:06.210 UTC</dateCreated>
+</layer>

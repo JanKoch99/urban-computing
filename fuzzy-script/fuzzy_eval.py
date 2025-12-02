@@ -7,7 +7,7 @@ import time
 import os
 from multiprocessing import Pool, cpu_count
 
-# --- CONFIGURATION (same as before) ---
+# --- CONFIGURATION ---
 fuzzy_inputs = [
     {"input_file": "../geoserver_data/data/pm10.tif", "max_value": 400, "name": "pm10", "good": [0, 0, 160],
      "moderate": [150, 230, 310], "bad": [300, 320, 400]},
@@ -65,12 +65,12 @@ quality['liveable'] = fuzz.trimf(quality.universe, [50, 60, 70])
 quality['bad'] = fuzz.trimf(quality.universe, [65, 80, 90])
 quality['very_bad'] = fuzz.trimf(quality.universe, [85, 100, 100])
 
-# --- RULES (same logic as before) ---
-pm10 = antecedents['pm10'];
-pm25 = antecedents['pm25'];
+# --- RULES ---
+pm10 = antecedents['pm10']
+pm25 = antecedents['pm25']
 russ = antecedents['russ']
-no2 = antecedents['no2'];
-ozon = antecedents['ozon'];
+no2 = antecedents['no2']
+ozon = antecedents['ozon']
 laerm = antecedents['laerm']
 
 any_bad = pm10['bad'] | pm25['bad'] | russ['bad'] | no2['bad'] | ozon['bad'] | laerm['bad']
@@ -205,7 +205,7 @@ if __name__ == "__main__":
     with rasterio.open(output_file, 'w', **meta) as dst:
         dst.write(fuzzy_map.astype(rasterio.float32), 1)
 
-    # --- Optional Plot ---
+    # --- Save Plot ---
     import matplotlib.pyplot as plt
 
     plt.figure(figsize=(10, 10))

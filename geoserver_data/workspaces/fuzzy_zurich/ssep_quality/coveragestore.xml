@@ -1,0 +1,14 @@
+<coverageStore>
+  <id>CoverageStoreInfoImpl-489b96c0:19ad1310f4f:-7e9c</id>
+  <name>ssep_quality</name>
+  <type>GeoTIFF</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfoImpl-47433c2f:19a549ff7ba:-8000</id>
+  </workspace>
+  <__default>false</__default>
+  <dateCreated>2025-11-29 20:41:15.468 UTC</dateCreated>
+  <dateModified>2025-11-29 20:41:17.518 UTC</dateModified>
+  <disableOnConnFailure>false</disableOnConnFailure>
+  <url>file:data/combined_score_zurich.tif</url>
+</coverageStore>

@@ -11,6 +11,8 @@ function App() {
   const [russShow, setRussShow] = useState(false)
   const [laermShow, setLaermShow] = useState(false)
   const [fuzzyShow, setFuzzyShow] = useState(false)
+  const [ssepQualityShow, setssepQualityShow] = useState(false)
+  const [ssepShow, setssepShow] = useState(false)
   const [opacity] = useState(0.7)
   const zurichCenter = [47.3769, 8.5417];
   const [activeLegendUrl, setActiveLegendUrl] = useState(null);
@@ -40,6 +42,61 @@ function App() {
       </div>
     </div>
   );
+
+const ssepQualityLegend = () => (
+  <div>
+    <div className="mb-2 fw-bold">Combined Score (0–20)</div>
+
+    <div className="small mb-3">
+      Combined index from the Swiss Neighbourhood Index of Socioeconomic Position(Swiss-SEP) and the fuzzy live quality.
+      <br />
+      <strong>Low value:</strong> high SEP and high fuzzy live quality.
+      <br />
+      <strong>High value:</strong> low SEP and low fuzzy live quality.
+    </div>
+
+    <div className="d-flex align-items-center mb-1">
+      <span style={{
+        width: 16, height: 16, backgroundColor: '#0000FF',
+        display: 'inline-block', marginRight: 8, border: '1px solid #333'
+      }} />
+      <span>Very Low (0–4) — very high SEP and fuzzy live quality</span>
+    </div>
+
+    <div className="d-flex align-items-center mb-1">
+      <span style={{
+        width: 16, height: 16, backgroundColor: '#00A0FF',
+        display: 'inline-block', marginRight: 8, border: '1px solid #333'
+      }} />
+      <span>Low (5–9) — high SEP and fuzzy live quality</span>
+    </div>
+
+    <div className="d-flex align-items-center mb-1">
+      <span style={{
+        width: 16, height: 16, backgroundColor: '#00FFFF',
+        display: 'inline-block', marginRight: 8, border: '1px solid #333'
+      }} />
+      <span>Medium (10–12) — medium SEP and fuzzy live quality</span>
+    </div>
+
+    <div className="d-flex align-items-center mb-1">
+      <span style={{
+        width: 16, height: 16, backgroundColor: '#FFFF00',
+        display: 'inline-block', marginRight: 8, border: '1px solid #333'
+      }} />
+      <span>High (13–16) — low SEP and fuzzy live quality</span>
+    </div>
+
+    <div className="d-flex align-items-center">
+      <span style={{
+        width: 16, height: 16, backgroundColor: '#FF0000',
+        display: 'inline-block', marginRight: 8, border: '1px solid #333'
+      }} />
+      <span>Very High (17–20) — very low SEP and fuzzy live quality</span>
+    </div>
+  </div>
+);
+
 
   const setLegendFor = (key, checked) => {
     if (!checked) {
@@ -83,6 +140,8 @@ function App() {
     setRussShow(layer === 'russ' ? checked : false);
     setLaermShow(layer === 'laerm' ? checked : false);
     setFuzzyShow(layer === 'fuzzy' ? checked : false);
+    setssepQualityShow(layer === 'ssepQualityShow' ? checked : false);
+    setssepShow(layer === 'ssepShow' ? checked : false);
     setLegendFor(layer, checked);
   };
 
@@ -177,6 +236,30 @@ function App() {
                             Fuzzy Environment
                         </label>
                     </div>
+                     <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="ssepQualityShow"
+                            checked={ssepQualityShow}
+                            onChange={handleToggle('ssepQualityShow')}
+                        />
+                        <label className="form-check-label" htmlFor="ssepQualityShow">
+                            ssep-Quality
+                        </label>
+                    </div>
+                    <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="ssepShow"
+                            checked={ssepShow}
+                            onChange={handleToggle('ssepShow')}
+                        />
+                        <label className="form-check-label" htmlFor="ssepShow">
+                            ssep
+                        </label>
+                    </div>
                 </div>
             </div>
             {(activeLegendUrl || fuzzyShow) && (
@@ -190,6 +273,13 @@ function App() {
                     </div>
                 </div>
             )}
+            {(ssepQualityShow || ssepShow) && (
+                <div className="card position-absolute z-1 bottom-0 end-0 m-3">
+                    <div className="card-body">
+                        <ssepQualityLegend />
+                    </div>
+                </div>
+            )}
             <MapContainer center={zurichCenter} zoom={10} className="h-full w-full z-0">
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -200,6 +290,30 @@ function App() {
                         url="http://localhost:8080/geoserver/fuzzy_zurich/wms"
                         layers="fuzzy_zurich:zurich_fuzzy_quality"
                         styles="fuzzy_zurich:zurich_fuzzy_quality_colored"
+                        format="image/png"
+                        transparent={true}
+                        version="1.3.0"
+                        attribution="© Your Local GeoServer"
+                        opacity={opacity}
+                    />
+                )}
+                 {ssepQualityShow && (
+                    <WMSTileLayer
+                        url="http://localhost:8080/geoserver/fuzzy_zurich/wms"
+                        layers="fuzzy_zurich:ssep_quality"
+                        styles="fuzzy_zurich:ssel_quality_colored"
+                        format="image/png"
+                        transparent={true}
+                        version="1.3.0"
+                        attribution="© Your Local GeoServer"
+                        opacity={opacity}
+                    />
+                )}
+                {ssepShow && (
+                    <WMSTileLayer
+                        url="http://localhost:8080/geoserver/fuzzy_zurich/wms"
+                        layers="fuzzy_zurich:ssep"
+                        styles="fuzzy_zurich:ssel_quality_colored"
                         format="image/png"
                         transparent={true}
                         version="1.3.0"

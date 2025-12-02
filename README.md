@@ -25,10 +25,14 @@ Step-by-step: How to use this project
   - Download the files from OneDrive
   - Put the files in ./geoserver_data/data
 
+1.1) (Optional) If you want to also generate the SEP data you need to get the data here:
+  - https://boris-portal.unibe.ch/entities/product/8fb9dd20-d609-4b09-950b-ae74d242544a
+  - Then add your path to the file in the notebook at `fuzzy-script/ssepCreator.ipynb`
+
 2) Generate the fuzzy cards if not copied from the OneDrive folder
    - Open the notebook at `fuzzy-script/FuzzyCardGenerator7.ipynb` in Jupyter (or VS Code/JupyterLab).
    - Run all cells to generate the required outputs. Follow the instructions inside the notebook for any data inputs and output locations.
-   - This takes a while, so be patient (1–3 hours)
+   - This takes a while, so be patient (~4 hours)
 
 3) Start the GeoServer stack
    - From the repository root, run:
